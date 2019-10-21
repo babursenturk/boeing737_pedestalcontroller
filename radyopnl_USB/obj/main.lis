@@ -1,0 +1,1143 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area data(ram, con, rel)
+ 0000           _STATUS::
+ 0000 0000              .word 0
+ 0002                   .dbfile ./hbheader.h
+ 0002                   .dbsym e STATUS _STATUS I
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./hbheader.h
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./hbheader.h
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfunc e Counter16_1_ISR _Counter16_1_ISR fV
+ 0000           _Counter16_1_ISR::
+ 0000                   .dbline -1
+ 0000 71C0              or F,-64
+ 0002 08                push A
+ 0003 5DD0              mov A,REG[0xd0]
+ 0005 08                push A
+ 0006 5DD3              mov A,REG[0xd3]
+ 0008 08                push A
+ 0009 5DD4              mov A,REG[0xd4]
+ 000B 08                push A
+ 000C 5DD5              mov A,REG[0xd5]
+ 000E 08                push A
+ 000F 62D000            mov REG[0xd0],>__r0
+ 0012 5100              mov A,[__r0]
+ 0014 08                push A
+ 0015 5100              mov A,[__r1]
+ 0017 08                push A
+ 0018 5100              mov A,[__r2]
+ 001A 08                push A
+ 001B 5100              mov A,[__r3]
+ 001D 08                push A
+ 001E 5100              mov A,[__r4]
+ 0020 08                push A
+ 0021 5100              mov A,[__r5]
+ 0023 08                push A
+ 0024 5100              mov A,[__r6]
+ 0026 08                push A
+ 0027 5100              mov A,[__r7]
+ 0029 08                push A
+ 002A 5100              mov A,[__r8]
+ 002C 08                push A
+ 002D 5100              mov A,[__r9]
+ 002F 08                push A
+ 0030 5100              mov A,[__r10]
+ 0032 08                push A
+ 0033 5100              mov A,[__r11]
+ 0035 08                push A
+ 0036 5100              mov A,[__rX]
+ 0038 08                push A
+ 0039 5100              mov A,[__rY]
+ 003B 08                push A
+ 003C 5100              mov A,[__rZ]
+ 003E 08                push A
+ 003F                   .dbline 32
+ 003F           ; //----------------------------------------------------------------------------
+ 003F           ; // USB to I2C Bridge 2007
+ 003F           ; //----------------------------------------------------------------------------
+ 003F           ; 
+ 003F           ; #include <m8c.h>
+ 003F           ; #include "PSoCAPI.h"
+ 003F           ; #include "hbheader.h"
+ 003F           ; #define SLAVE_ADDRESS 18
+ 003F           ; 
+ 003F           ; BYTE    txBuffer[32];  
+ 003F           ; BYTE    rxBuffer[32]; 
+ 003F           ; BYTE  cevapbuffer[32];
+ 003F           ; BYTE    status;  
+ 003F           ; BYTE *ptr;
+ 003F           ; 
+ 003F           ; WORD cnt;
+ 003F           ; WORD acnt;
+ 003F           ; WORD Timeout_d;
+ 003F           ; void TX(unsigned char slad), RX(unsigned char slad2);
+ 003F           ; 
+ 003F           ; extern BYTE SOF_Flag;
+ 003F           ; extern BYTE USBFS_1_INTERFACE_0_OUT_RPT_DATA[8];
+ 003F           ; 
+ 003F           ; BYTE OutReport, Count;
+ 003F           ; 
+ 003F           ; #pragma interrupt_handler Counter16_1_ISR
+ 003F           ; void Counter16_1_ISR(void);
+ 003F           ; 
+ 003F           ; void dly(long int mS), enumerat(void), init_environment(void), shutdwn(void);
+ 003F           ; 
+ 003F           ; /* --------------------- Interrupt handlerlar --------------------------- */
+ 003F           ; void Counter16_1_ISR() {Counter16_1_DisableInt(); Counter16_1_Stop(); DELAY_CLR;}     //100µSn..5sn lik Gecikme
+ 003F                   .dbline 32
+ 003F 10                push X
+ 0040 7C0000            xcall _Counter16_1_DisableInt
+ 0043                   .dbline 32
+ 0043 7C0000            xcall _Counter16_1_Stop
+ 0046 20                pop X
+ 0047                   .dbline 32
+ 0047 62D000            mov REG[0xd0],>_STATUS
+ 004A 5101              mov A,[_STATUS+1]
+ 004C 21FE              and A,-2
+ 004E 62D000            mov REG[0xd0],>__r0
+ 0051 5300              mov [__r1],A
+ 0053 62D000            mov REG[0xd0],>_STATUS
+ 0056 5100              mov A,[_STATUS]
+ 0058 62D000            mov REG[0xd0],>__r0
+ 005B 5300              mov [__r0],A
+ 005D 5100              mov A,[__r1]
+ 005F 08                push A
+ 0060 5100              mov A,[__r0]
+ 0062 62D000            mov REG[0xd0],>_STATUS
+ 0065 5300              mov [_STATUS],A
+ 0067 18                pop A
+ 0068 5301              mov [_STATUS+1],A
+ 006A                   .dbline -2
+ 006A                   .dbline 32
+ 006A           L2:
+ 006A 62D000            mov REG[0xD0],>__r0
+ 006D 18                pop A
+ 006E 5300              mov [__rZ],A
+ 0070 18                pop A
+ 0071 5300              mov [__rY],A
+ 0073 18                pop A
+ 0074 5300              mov [__rX],A
+ 0076 18                pop A
+ 0077 5300              mov [__r11],A
+ 0079 18                pop A
+ 007A 5300              mov [__r10],A
+ 007C 18                pop A
+ 007D 5300              mov [__r9],A
+ 007F 18                pop A
+ 0080 5300              mov [__r8],A
+ 0082 18                pop A
+ 0083 5300              mov [__r7],A
+ 0085 18                pop A
+ 0086 5300              mov [__r6],A
+ 0088 18                pop A
+ 0089 5300              mov [__r5],A
+ 008B 18                pop A
+ 008C 5300              mov [__r4],A
+ 008E 18                pop A
+ 008F 5300              mov [__r3],A
+ 0091 18                pop A
+ 0092 5300              mov [__r2],A
+ 0094 18                pop A
+ 0095 5300              mov [__r1],A
+ 0097 18                pop A
+ 0098 5300              mov [__r0],A
+ 009A 18                pop A
+ 009B 60D5              mov REG[213],A
+ 009D 18                pop A
+ 009E 60D4              mov REG[212],A
+ 00A0 18                pop A
+ 00A1 60D3              mov REG[211],A
+ 00A3 18                pop A
+ 00A4 60D0              mov REG[208],A
+ 00A6 18                pop A
+ 00A7                   .dbline 0 ; func end
+ 00A7 7E                reti
+ 00A8                   .dbend
+ 00A8                   .dbfunc e shutdwn _shutdwn fV
+ 00A8           _shutdwn::
+ 00A8                   .dbline -1
+ 00A8                   .dbline 37
+ 00A8           ; 
+ 00A8           ; /* ------------------- Initalizasyon rutinleri -------------------------- */
+ 00A8           ; 
+ 00A8           ; void shutdwn()
+ 00A8           ; {     USBFS_1_Stop(); I2CHW_1_Stop();}
+ 00A8                   .dbline 37
+ 00A8 10                push X
+ 00A9 7C0000            xcall _USBFS_1_Stop
+ 00AC                   .dbline 37
+ 00AC 7C0000            xcall _I2CHW_1_Stop
+ 00AF 20                pop X
+ 00B0                   .dbline -2
+ 00B0                   .dbline 37
+ 00B0           L3:
+ 00B0                   .dbline 0 ; func end
+ 00B0 7F                ret
+ 00B1                   .dbend
+ 00B1                   .dbfunc e init_environment _init_environment fV
+ 00B1           _init_environment::
+ 00B1                   .dbline -1
+ 00B1                   .dbline 40
+ 00B1           ; 
+ 00B1           ; void init_environment()
+ 00B1           ; {     M8C_EnableGInt; USBFS_1_Start(0, USB_5V_OPERATION);
+ 00B1                   .dbline 40
+ 00B1 7101                      or  F, 01h
+ 00B3           
+ 00B3                   .dbline 40
+ 00B3 10                push X
+ 00B4 5703              mov X,3
+ 00B6 5000              mov A,0
+ 00B8 7C0000            xcall _USBFS_1_Start
+ 00BB                   .dbline 41
+ 00BB           ;       I2CHW_1_Start();I2CHW_1_EnableMstr();I2CHW_1_EnableInt();}
+ 00BB 7C0000            xcall _I2CHW_1_Start
+ 00BE                   .dbline 41
+ 00BE 7C0000            xcall _I2CHW_1_EnableMstr
+ 00C1                   .dbline 41
+ 00C1 7C0000            xcall _I2CHW_1_EnableInt
+ 00C4 20                pop X
+ 00C5                   .dbline -2
+ 00C5                   .dbline 41
+ 00C5           L4:
+ 00C5                   .dbline 0 ; func end
+ 00C5 7F                ret
+ 00C6                   .dbend
+ 00C6                   .dbfunc e enumerat _enumerat fV
+ 00C6           _enumerat::
+ 00C6                   .dbline -1
+ 00C6                   .dbline 44
+ 00C6           ; 
+ 00C6           ; void enumerat()
+ 00C6           ; {
+ 00C6           L6:
+ 00C6                   .dbline 45
+ 00C6           L7:
+ 00C6                   .dbline 45
+ 00C6           ;       while (!USBFS_1_bGetConfiguration());
+ 00C6 10                push X
+ 00C7 7C0000            xcall _USBFS_1_bGetConfiguration
+ 00CA 62D000            mov REG[0xd0],>__r0
+ 00CD 20                pop X
+ 00CE 3900              cmp A,0
+ 00D0 AFF5              jz L6
+ 00D2                   .dbline 46
+ 00D2           ;       USBFS_1_LoadInEP(3, rxBuffer, 1, USB_NO_TOGGLE);
+ 00D2 10                push X
+ 00D3 5000              mov A,0
+ 00D5 08                push A
+ 00D6 08                push A
+ 00D7 5001              mov A,1
+ 00D9 08                push A
+ 00DA 5000              mov A,>_rxBuffer
+ 00DC 08                push A
+ 00DD 5000              mov A,<_rxBuffer
+ 00DF 08                push A
+ 00E0 5003              mov A,3
+ 00E2 08                push A
+ 00E3 7C0000            xcall _USBFS_1_LoadInEP
+ 00E6 38FA              add SP,-6
+ 00E8 20                pop X
+ 00E9                   .dbline 48
+ 00E9           ;       
+ 00E9           ;       USBFS_1_INT_REG |= USBFS_1_INT_SOF_MASK; PRT2DR|=BSET_6; //Enumeration complete! :)
+ 00E9 43DF02            or REG[0xdf],2
+ 00EC                   .dbline 48
+ 00EC 430840            or REG[0x8],64
+ 00EF                   .dbline 49
+ 00EF           ;       USBFS_1_EnableOutEP(2);}
+ 00EF 10                push X
+ 00F0 5002              mov A,2
+ 00F2 7C0000            xcall _USBFS_1_EnableOutEP
+ 00F5 20                pop X
+ 00F6                   .dbline -2
+ 00F6                   .dbline 49
+ 00F6           L5:
+ 00F6                   .dbline 0 ; func end
+ 00F6 7F                ret
+ 00F7                   .dbend
+ 00F7                   .dbfunc e init_delay_counter _init_delay_counter fV
+ 00F7           ;             DC -> X-11
+ 00F7           ;            mSn -> X-7
+ 00F7           _init_delay_counter::
+ 00F7                   .dbline -1
+ 00F7 10                push X
+ 00F8 4F                mov X,SP
+ 00F9                   .dbline 52
+ 00F9           ; 
+ 00F9           ; void init_delay_counter(long int mSn, long int DC)
+ 00F9           ; {   Counter16_1_WritePeriod(mSn); Counter16_1_WriteCompareValue(DC); Counter16_1_EnableInt();DELAY_SET; Counter16_1_Start();}
+ 00F9                   .dbline 52
+ 00F9 62D000            mov REG[0xd0],>__r0
+ 00FC 52FC              mov A,[X-4]
+ 00FE 5300              mov [__r1],A
+ 0100 52FB              mov A,[X-5]
+ 0102 10                push X
+ 0103 08                push A
+ 0104 5100              mov A,[__r1]
+ 0106 20                pop X
+ 0107 7C0000            xcall _Counter16_1_WritePeriod
+ 010A 20                pop X
+ 010B                   .dbline 52
+ 010B 62D000            mov REG[0xd0],>__r0
+ 010E 52F8              mov A,[X-8]
+ 0110 5300              mov [__r1],A
+ 0112 52F7              mov A,[X-9]
+ 0114 10                push X
+ 0115 08                push A
+ 0116 5100              mov A,[__r1]
+ 0118 20                pop X
+ 0119 7C0000            xcall _Counter16_1_WriteCompareValue
+ 011C                   .dbline 52
+ 011C 7C0000            xcall _Counter16_1_EnableInt
+ 011F 20                pop X
+ 0120                   .dbline 52
+ 0120 62D000            mov REG[0xd0],>_STATUS
+ 0123 2E0101            or [_STATUS+1],1
+ 0126                   .dbline 52
+ 0126 10                push X
+ 0127 7C0000            xcall _Counter16_1_Start
+ 012A 20                pop X
+ 012B                   .dbline -2
+ 012B                   .dbline 52
+ 012B           L9:
+ 012B 20                pop X
+ 012C                   .dbline 0 ; func end
+ 012C 7F                ret
+ 012D                   .dbsym l DC -11 L
+ 012D                   .dbsym l mSn -7 L
+ 012D                   .dbend
+ 012D                   .dbfunc e main _main fV
+ 012D           ;              x -> X+0
+ 012D           _main::
+ 012D                   .dbline -1
+ 012D 10                push X
+ 012E 4F                mov X,SP
+ 012F 3801              add SP,1
+ 0131                   .dbline 56
+ 0131           ; /* ---------------------------------------------------------------------- */
+ 0131           ; 
+ 0131           ; void main()
+ 0131           ; {     char x;
+ 0131                   .dbline 57
+ 0131           ;       init_environment();
+ 0131 9F7E              xcall _init_environment
+ 0133                   .dbline 58
+ 0133           ;       enumerat();
+ 0133 9F91              xcall _enumerat
+ 0135                   .dbline 60
+ 0135           ; 
+ 0135           ;       dly(10000);
+ 0135 5000              mov A,0
+ 0137 08                push A
+ 0138 08                push A
+ 0139 5027              mov A,39
+ 013B 08                push A
+ 013C 5010              mov A,16
+ 013E 08                push A
+ 013F 92E3              xcall _dly
+ 0141                   .dbline 67
+ 0141           ; //    while (!USBFS_1_bGetConfiguration());
+ 0141           ; //    USBFS_1_LoadInEP(1, rxBuffer, 1, USB_NO_TOGGLE);
+ 0141           ; //    
+ 0141           ; //    USBFS_1_INT_REG |= USBFS_1_INT_SOF_MASK;
+ 0141           ; //    PRT2DR = 0b00010000;    //Ack TAMAM!
+ 0141           ; //    USBFS_1_EnableOutEP(4);
+ 0141           ;       txBuffer[6] = 15; txBuffer[7] = 00; txBuffer[8] = 2;
+ 0141 62D000            mov REG[0xd0],>_txBuffer
+ 0144 55060F            mov [_txBuffer+6],15
+ 0147                   .dbline 67
+ 0147 550700            mov [_txBuffer+7],0
+ 014A                   .dbline 67
+ 014A 550802            mov [_txBuffer+8],2
+ 014D                   .dbline 69
+ 014D           ;       
+ 014D           ;       cnt=0; acnt=0; Timeout_d=0;
+ 014D 62D000            mov REG[0xd0],>_cnt
+ 0150 550100            mov [_cnt+1],0
+ 0153 550000            mov [_cnt],0
+ 0156                   .dbline 69
+ 0156 62D000            mov REG[0xd0],>_acnt
+ 0159 550100            mov [_acnt+1],0
+ 015C 550000            mov [_acnt],0
+ 015F                   .dbline 69
+ 015F 62D000            mov REG[0xd0],>_Timeout_d
+ 0162 550100            mov [_Timeout_d+1],0
+ 0165 550000            mov [_Timeout_d],0
+ 0168                   .dbline 70
+ 0168           ;       dly(50000);
+ 0168 5000              mov A,0
+ 016A 08                push A
+ 016B 08                push A
+ 016C 50C3              mov A,-61
+ 016E 08                push A
+ 016F 5050              mov A,80
+ 0171 08                push A
+ 0172 92B0              xcall _dly
+ 0174 38F8              add SP,-8
+ 0176 82A6              xjmp L15
+ 0178           L14:
+ 0178                   .dbline 73
+ 0178           ;       // HABERLESME OK!!! SELCUK 26.02.2008
+ 0178           ;       
+ 0178           ;       while(1) {
+ 0178                   .dbline 74
+ 0178 62D000            mov REG[0xd0],>_Timeout_d
+ 017B 5101              mov A,[_Timeout_d+1]
+ 017D 62D000            mov REG[0xd0],>__r0
+ 0180 5300              mov [__r3],A
+ 0182 62D000            mov REG[0xd0],>_Timeout_d
+ 0185 5100              mov A,[_Timeout_d]
+ 0187 62D000            mov REG[0xd0],>__r0
+ 018A 550000            mov [__r1],0
+ 018D 550000            mov [__r0],0
+ 0190 3C0000            cmp [__r0],0
+ 0193 B03C              jnz L17
+ 0195 3C0000            cmp [__r1],0
+ 0198 B037              jnz L17
+ 019A 39C3              cmp A,-61
+ 019C B033              jnz L17
+ 019E 3C0050            cmp [__r3],80
+ 01A1 B02E              jnz L17
+ 01A3           X1:
+ 01A3                   .dbline 74
+ 01A3                   .dbline 74
+ 01A3 5D10              mov A,REG[0x10]
+ 01A5 62D000            mov REG[0xd0],>__r0
+ 01A8 5300              mov [__r0],A
+ 01AA 26007F            and [__r0],127
+ 01AD 5100              mov A,[__r0]
+ 01AF 6010              mov REG[0x10],A
+ 01B1                   .dbline 74
+ 01B1 62D000            mov REG[0xd0],>_Timeout_d
+ 01B4 550100            mov [_Timeout_d+1],0
+ 01B7 550000            mov [_Timeout_d],0
+ 01BA                   .dbline 74
+ 01BA 9EEC              xcall _shutdwn
+ 01BC                   .dbline 74
+ 01BC 5000              mov A,0
+ 01BE 08                push A
+ 01BF 08                push A
+ 01C0 5027              mov A,39
+ 01C2 08                push A
+ 01C3 5010              mov A,16
+ 01C5 08                push A
+ 01C6 925C              xcall _dly
+ 01C8 38FC              add SP,-4
+ 01CA                   .dbline 74
+ 01CA 9EE5              xcall _init_environment
+ 01CC                   .dbline 74
+ 01CC 9EF8              xcall _enumerat
+ 01CE                   .dbline 74
+ 01CE 8009              xjmp L18
+ 01D0           L17:
+ 01D0                   .dbline 74
+ 01D0           ;               if      (Timeout_d==50000) {PRT4DR&=BCLR_7; Timeout_d=0; shutdwn(); dly(10000); init_environment(); enumerat();} else {Timeout_d++;}
+ 01D0                   .dbline 74
+ 01D0 62D000            mov REG[0xd0],>_Timeout_d
+ 01D3 7601              inc [_Timeout_d+1]
+ 01D5 0E0000            adc [_Timeout_d],0
+ 01D8                   .dbline 74
+ 01D8           L18:
+ 01D8                   .dbline 76
+ 01D8           ; 
+ 01D8           ;               if (SOF_Flag) { //buraya 1mSn de bir gelio birader...
+ 01D8 62D000            mov REG[0xd0],>_SOF_Flag
+ 01DB 3C0000            cmp [_SOF_Flag],0
+ 01DE A23E              jz L19
+ 01E0                   .dbline 76
+ 01E0                   .dbline 77
+ 01E0           ;                       SOF_Flag = 0; Timeout_d=0;
+ 01E0 550000            mov [_SOF_Flag],0
+ 01E3                   .dbline 77
+ 01E3 62D000            mov REG[0xd0],>_Timeout_d
+ 01E6 550100            mov [_Timeout_d+1],0
+ 01E9 550000            mov [_Timeout_d],0
+ 01EC                   .dbline 80
+ 01EC           ;                       //rxBuffer[0]=2; rxBuffer[1]=8; //PC ye gidecek bunnar.
+ 01EC           ;                       //PRT0DR|=BSET_1; TX(18);PRT0DR&=BCLR_1; 
+ 01EC           ;                               TX(18);
+ 01EC 5012              mov A,18
+ 01EE 08                push A
+ 01EF 9296              xcall _TX
+ 01F1                   .dbline 81
+ 01F1           ;                               RX(18); 
+ 01F1 5012              mov A,18
+ 01F3 08                push A
+ 01F4 92BA              xcall _RX
+ 01F6 38FE              add SP,-2
+ 01F8                   .dbline 82
+ 01F8           ;                               TX(18);
+ 01F8 5012              mov A,18
+ 01FA 08                push A
+ 01FB 928A              xcall _TX
+ 01FD                   .dbline 83
+ 01FD           ;                               RX(18); 
+ 01FD 5012              mov A,18
+ 01FF 08                push A
+ 0200 92AE              xcall _RX
+ 0202 38FE              add SP,-2
+ 0204                   .dbline 84
+ 0204           ;                               cevapbuffer[0]=rxBuffer[0];cevapbuffer[1]=rxBuffer[1];cevapbuffer[2]=rxBuffer[2];cevapbuffer[3]=rxBuffer[3];
+ 0204 62D000            mov REG[0xd0],>_rxBuffer
+ 0207 5100              mov A,[_rxBuffer]
+ 0209 62D000            mov REG[0xd0],>_cevapbuffer
+ 020C 5300              mov [_cevapbuffer],A
+ 020E                   .dbline 84
+ 020E 62D000            mov REG[0xd0],>_rxBuffer
+ 0211 5101              mov A,[_rxBuffer+1]
+ 0213 62D000            mov REG[0xd0],>_cevapbuffer
+ 0216 5301              mov [_cevapbuffer+1],A
+ 0218                   .dbline 84
+ 0218 62D000            mov REG[0xd0],>_rxBuffer
+ 021B 5102              mov A,[_rxBuffer+2]
+ 021D 62D000            mov REG[0xd0],>_cevapbuffer
+ 0220 5302              mov [_cevapbuffer+2],A
+ 0222                   .dbline 84
+ 0222 62D000            mov REG[0xd0],>_rxBuffer
+ 0225 5103              mov A,[_rxBuffer+3]
+ 0227 62D000            mov REG[0xd0],>_cevapbuffer
+ 022A 5303              mov [_cevapbuffer+3],A
+ 022C                   .dbline 85
+ 022C           ;                               cevapbuffer[18]=rxBuffer[4]; //bu sol sag datasii
+ 022C 62D000            mov REG[0xd0],>_rxBuffer
+ 022F 5104              mov A,[_rxBuffer+4]
+ 0231 62D000            mov REG[0xd0],>_cevapbuffer
+ 0234 5312              mov [_cevapbuffer+18],A
+ 0236                   .dbline 87
+ 0236           ; 
+ 0236           ;                               TX(10);
+ 0236 500A              mov A,10
+ 0238 08                push A
+ 0239 924C              xcall _TX
+ 023B                   .dbline 88
+ 023B           ;                               RX(10); // dikkat bura tehlikeli. ilgili cihazdan yanit gelmez ise, önceki degerleri gelmis gibi yollarrr...
+ 023B 500A              mov A,10
+ 023D 08                push A
+ 023E 9270              xcall _RX
+ 0240 38FE              add SP,-2
+ 0242                   .dbline 89
+ 0242           ;                               TX(10);
+ 0242 500A              mov A,10
+ 0244 08                push A
+ 0245 9240              xcall _TX
+ 0247                   .dbline 90
+ 0247           ;                               RX(10); // dikkat bura tehlikeli. ilgili cihazdan yanit gelmez ise, önceki degerleri gelmis gibi yollarrr...
+ 0247 500A              mov A,10
+ 0249 08                push A
+ 024A 9264              xcall _RX
+ 024C 38FE              add SP,-2
+ 024E                   .dbline 91
+ 024E           ;                               cevapbuffer[4]=rxBuffer[0];cevapbuffer[5]=rxBuffer[1];cevapbuffer[6]=rxBuffer[2];cevapbuffer[7]=rxBuffer[3];
+ 024E 62D000            mov REG[0xd0],>_rxBuffer
+ 0251 5100              mov A,[_rxBuffer]
+ 0253 62D000            mov REG[0xd0],>_cevapbuffer
+ 0256 5304              mov [_cevapbuffer+4],A
+ 0258                   .dbline 91
+ 0258 62D000            mov REG[0xd0],>_rxBuffer
+ 025B 5101              mov A,[_rxBuffer+1]
+ 025D 62D000            mov REG[0xd0],>_cevapbuffer
+ 0260 5305              mov [_cevapbuffer+5],A
+ 0262                   .dbline 91
+ 0262 62D000            mov REG[0xd0],>_rxBuffer
+ 0265 5102              mov A,[_rxBuffer+2]
+ 0267 62D000            mov REG[0xd0],>_cevapbuffer
+ 026A 5306              mov [_cevapbuffer+6],A
+ 026C                   .dbline 91
+ 026C 62D000            mov REG[0xd0],>_rxBuffer
+ 026F 5103              mov A,[_rxBuffer+3]
+ 0271 62D000            mov REG[0xd0],>_cevapbuffer
+ 0274 5307              mov [_cevapbuffer+7],A
+ 0276                   .dbline 93
+ 0276           ; 
+ 0276           ;                               TX(13);
+ 0276 500D              mov A,13
+ 0278 08                push A
+ 0279 920C              xcall _TX
+ 027B                   .dbline 94
+ 027B           ;                               RX(13); // dikkat bura tehlikeli. ilgili cihazdan yanit gelmez ise, önceki degerleri gelmis gibi yollarrr...
+ 027B 500D              mov A,13
+ 027D 08                push A
+ 027E 9230              xcall _RX
+ 0280 38FE              add SP,-2
+ 0282                   .dbline 95
+ 0282           ;                               TX(13);
+ 0282 500D              mov A,13
+ 0284 08                push A
+ 0285 9200              xcall _TX
+ 0287                   .dbline 96
+ 0287           ;                               RX(13); // dikkat bura tehlikeli. ilgili cihazdan yanit gelmez ise, önceki degerleri gelmis gibi yollarrr...
+ 0287 500D              mov A,13
+ 0289 08                push A
+ 028A 9224              xcall _RX
+ 028C 38FE              add SP,-2
+ 028E                   .dbline 97
+ 028E           ;                               cevapbuffer[8]=rxBuffer[0];cevapbuffer[9]=rxBuffer[1];cevapbuffer[10]=rxBuffer[2];cevapbuffer[11]=rxBuffer[3]; cevapbuffer[12]=rxBuffer[4];
+ 028E 62D000            mov REG[0xd0],>_rxBuffer
+ 0291 5100              mov A,[_rxBuffer]
+ 0293 62D000            mov REG[0xd0],>_cevapbuffer
+ 0296 5308              mov [_cevapbuffer+8],A
+ 0298                   .dbline 97
+ 0298 62D000            mov REG[0xd0],>_rxBuffer
+ 029B 5101              mov A,[_rxBuffer+1]
+ 029D 62D000            mov REG[0xd0],>_cevapbuffer
+ 02A0 5309              mov [_cevapbuffer+9],A
+ 02A2                   .dbline 97
+ 02A2 62D000            mov REG[0xd0],>_rxBuffer
+ 02A5 5102              mov A,[_rxBuffer+2]
+ 02A7 62D000            mov REG[0xd0],>_cevapbuffer
+ 02AA 530A              mov [_cevapbuffer+10],A
+ 02AC                   .dbline 97
+ 02AC 62D000            mov REG[0xd0],>_rxBuffer
+ 02AF 5103              mov A,[_rxBuffer+3]
+ 02B1 62D000            mov REG[0xd0],>_cevapbuffer
+ 02B4 530B              mov [_cevapbuffer+11],A
+ 02B6                   .dbline 97
+ 02B6 62D000            mov REG[0xd0],>_rxBuffer
+ 02B9 5104              mov A,[_rxBuffer+4]
+ 02BB 62D000            mov REG[0xd0],>_cevapbuffer
+ 02BE 530C              mov [_cevapbuffer+12],A
+ 02C0                   .dbline 99
+ 02C0           ; 
+ 02C0           ;                               TX(19);
+ 02C0 5013              mov A,19
+ 02C2 08                push A
+ 02C3 91C2              xcall _TX
+ 02C5                   .dbline 100
+ 02C5           ;                               RX(19); // dikkat bura tehlikeli. ilgili cihazdan yanit gelmez ise, önceki degerleri gelmis gibi yollarrr...
+ 02C5 5013              mov A,19
+ 02C7 08                push A
+ 02C8 91E6              xcall _RX
+ 02CA 38FE              add SP,-2
+ 02CC                   .dbline 101
+ 02CC           ;                               TX(19);
+ 02CC 5013              mov A,19
+ 02CE 08                push A
+ 02CF 91B6              xcall _TX
+ 02D1                   .dbline 102
+ 02D1           ;                               RX(19); // dikkat bura tehlikeli. ilgili cihazdan yanit gelmez ise, önceki degerleri gelmis gibi yollarrr...
+ 02D1 5013              mov A,19
+ 02D3 08                push A
+ 02D4 91DA              xcall _RX
+ 02D6 38FE              add SP,-2
+ 02D8                   .dbline 103
+ 02D8           ;                               cevapbuffer[13]=rxBuffer[0];cevapbuffer[14]=rxBuffer[1];cevapbuffer[15]=rxBuffer[2];cevapbuffer[16]=rxBuffer[3]; cevapbuffer[17]=rxBuffer[4];
+ 02D8 62D000            mov REG[0xd0],>_rxBuffer
+ 02DB 5100              mov A,[_rxBuffer]
+ 02DD 62D000            mov REG[0xd0],>_cevapbuffer
+ 02E0 530D              mov [_cevapbuffer+13],A
+ 02E2                   .dbline 103
+ 02E2 62D000            mov REG[0xd0],>_rxBuffer
+ 02E5 5101              mov A,[_rxBuffer+1]
+ 02E7 62D000            mov REG[0xd0],>_cevapbuffer
+ 02EA 530E              mov [_cevapbuffer+14],A
+ 02EC                   .dbline 103
+ 02EC 62D000            mov REG[0xd0],>_rxBuffer
+ 02EF 5102              mov A,[_rxBuffer+2]
+ 02F1 62D000            mov REG[0xd0],>_cevapbuffer
+ 02F4 530F              mov [_cevapbuffer+15],A
+ 02F6                   .dbline 103
+ 02F6 62D000            mov REG[0xd0],>_rxBuffer
+ 02F9 5103              mov A,[_rxBuffer+3]
+ 02FB 62D000            mov REG[0xd0],>_cevapbuffer
+ 02FE 5310              mov [_cevapbuffer+16],A
+ 0300                   .dbline 103
+ 0300 62D000            mov REG[0xd0],>_rxBuffer
+ 0303 5104              mov A,[_rxBuffer+4]
+ 0305 62D000            mov REG[0xd0],>_cevapbuffer
+ 0308 5311              mov [_cevapbuffer+17],A
+ 030A                   .dbline 105
+ 030A           ; 
+ 030A           ;                               TX(17);
+ 030A 5011              mov A,17
+ 030C 08                push A
+ 030D 9178              xcall _TX
+ 030F                   .dbline 106
+ 030F           ;                               RX(17); // dikkat bura tehlikeli. ilgili cihazdan yanit gelmez ise, önceki degerleri gelmis gibi yollarrr...
+ 030F 5011              mov A,17
+ 0311 08                push A
+ 0312 919C              xcall _RX
+ 0314 38FE              add SP,-2
+ 0316                   .dbline 107
+ 0316           ;                               TX(17);
+ 0316 5011              mov A,17
+ 0318 08                push A
+ 0319 916C              xcall _TX
+ 031B                   .dbline 108
+ 031B           ;                               RX(17); // dikkat bura tehlikeli. ilgili cihazdan yanit gelmez ise, önceki degerleri gelmis gibi yollarrr...
+ 031B 5011              mov A,17
+ 031D 08                push A
+ 031E 9190              xcall _RX
+ 0320 38FE              add SP,-2
+ 0322                   .dbline 109
+ 0322           ;                               cevapbuffer[21]=rxBuffer[0];cevapbuffer[22]=rxBuffer[1];cevapbuffer[23]=rxBuffer[2];cevapbuffer[24]=rxBuffer[3]; cevapbuffer[25]=rxBuffer[4];
+ 0322 62D000            mov REG[0xd0],>_rxBuffer
+ 0325 5100              mov A,[_rxBuffer]
+ 0327 62D000            mov REG[0xd0],>_cevapbuffer
+ 032A 5315              mov [_cevapbuffer+21],A
+ 032C                   .dbline 109
+ 032C 62D000            mov REG[0xd0],>_rxBuffer
+ 032F 5101              mov A,[_rxBuffer+1]
+ 0331 62D000            mov REG[0xd0],>_cevapbuffer
+ 0334 5316              mov [_cevapbuffer+22],A
+ 0336                   .dbline 109
+ 0336 62D000            mov REG[0xd0],>_rxBuffer
+ 0339 5102              mov A,[_rxBuffer+2]
+ 033B 62D000            mov REG[0xd0],>_cevapbuffer
+ 033E 5317              mov [_cevapbuffer+23],A
+ 0340                   .dbline 109
+ 0340 62D000            mov REG[0xd0],>_rxBuffer
+ 0343 5103              mov A,[_rxBuffer+3]
+ 0345 62D000            mov REG[0xd0],>_cevapbuffer
+ 0348 5318              mov [_cevapbuffer+24],A
+ 034A                   .dbline 109
+ 034A 62D000            mov REG[0xd0],>_rxBuffer
+ 034D 5104              mov A,[_rxBuffer+4]
+ 034F 62D000            mov REG[0xd0],>_cevapbuffer
+ 0352 5319              mov [_cevapbuffer+25],A
+ 0354                   .dbline 112
+ 0354           ; 
+ 0354           ; 
+ 0354           ;                               TX(21);
+ 0354 5015              mov A,21
+ 0356 08                push A
+ 0357 912E              xcall _TX
+ 0359                   .dbline 113
+ 0359           ;                               RX(21); // dikkat bura tehlikeli. ilgili cihazdan yanit gelmez ise, önceki degerleri gelmis gibi yollarrr...
+ 0359 5015              mov A,21
+ 035B 08                push A
+ 035C 9152              xcall _RX
+ 035E 38FE              add SP,-2
+ 0360                   .dbline 114
+ 0360           ;                               TX(21);
+ 0360 5015              mov A,21
+ 0362 08                push A
+ 0363 9122              xcall _TX
+ 0365                   .dbline 115
+ 0365           ;                               RX(21); // dikkat bura tehlikeli. ilgili cihazdan yanit gelmez ise, önceki degerleri gelmis gibi yollarrr...
+ 0365 5015              mov A,21
+ 0367 08                push A
+ 0368 9146              xcall _RX
+ 036A 38FE              add SP,-2
+ 036C                   .dbline 116
+ 036C           ;                               cevapbuffer[19]=rxBuffer[0];cevapbuffer[20]=rxBuffer[1];
+ 036C 62D000            mov REG[0xd0],>_rxBuffer
+ 036F 5100              mov A,[_rxBuffer]
+ 0371 62D000            mov REG[0xd0],>_cevapbuffer
+ 0374 5313              mov [_cevapbuffer+19],A
+ 0376                   .dbline 116
+ 0376 62D000            mov REG[0xd0],>_rxBuffer
+ 0379 5101              mov A,[_rxBuffer+1]
+ 037B 62D000            mov REG[0xd0],>_cevapbuffer
+ 037E 5314              mov [_cevapbuffer+20],A
+ 0380                   .dbline 119
+ 0380           ; 
+ 0380           ;                                                       
+ 0380           ;                               if (USBFS_1_bGetEPAckState(2)) {
+ 0380 10                push X
+ 0381 5002              mov A,2
+ 0383 7C0000            xcall _USBFS_1_bGetEPAckState
+ 0386 62D000            mov REG[0xd0],>__r0
+ 0389 20                pop X
+ 038A 3900              cmp A,0
+ 038C A025              jz L66
+ 038E                   .dbline 119
+ 038E                   .dbline 120
+ 038E           ;                                       Count = USBFS_1_bReadOutEP(2, txBuffer, 32);            // PC ne yollamis bak bi.
+ 038E 10                push X
+ 038F 5000              mov A,0
+ 0391 08                push A
+ 0392 5020              mov A,32
+ 0394 08                push A
+ 0395 5000              mov A,>_txBuffer
+ 0397 08                push A
+ 0398 5000              mov A,<_txBuffer
+ 039A 08                push A
+ 039B 5002              mov A,2
+ 039D 08                push A
+ 039E 7C0000            xcall _USBFS_1_bReadOutEP
+ 03A1 38FB              add SP,-5
+ 03A3 20                pop X
+ 03A4 62D000            mov REG[0xd0],>_Count
+ 03A7 5300              mov [_Count],A
+ 03A9                   .dbline 121
+ 03A9           ;                                       USBFS_1_EnableOutEP(2);}
+ 03A9 10                push X
+ 03AA 5002              mov A,2
+ 03AC 7C0000            xcall _USBFS_1_EnableOutEP
+ 03AF 20                pop X
+ 03B0                   .dbline 121
+ 03B0 8032              xjmp L71
+ 03B2           L66:
+ 03B2                   .dbline 122
+ 03B2           ;                               else {acnt++; if (acnt==500) {USBFS_1_DisableOutEP(2);USBFS_1_EnableOutEP(2); acnt=0;}}
+ 03B2                   .dbline 122
+ 03B2 62D000            mov REG[0xd0],>_acnt
+ 03B5 7601              inc [_acnt+1]
+ 03B7 0E0000            adc [_acnt],0
+ 03BA                   .dbline 122
+ 03BA 3C0001            cmp [_acnt],1
+ 03BD B025              jnz L71
+ 03BF 3C01F4            cmp [_acnt+1],-12
+ 03C2 B020              jnz L71
+ 03C4           X2:
+ 03C4                   .dbline 122
+ 03C4                   .dbline 122
+ 03C4 10                push X
+ 03C5 5002              mov A,2
+ 03C7 7C0000            xcall _USBFS_1_DisableOutEP
+ 03CA                   .dbline 122
+ 03CA 5002              mov A,2
+ 03CC 7C0000            xcall _USBFS_1_EnableOutEP
+ 03CF 20                pop X
+ 03D0                   .dbline 122
+ 03D0 62D000            mov REG[0xd0],>_acnt
+ 03D3 550100            mov [_acnt+1],0
+ 03D6 550000            mov [_acnt],0
+ 03D9                   .dbline 122
+ 03D9                   .dbline 122
+ 03D9 8009              xjmp L71
+ 03DB           L70:
+ 03DB                   .dbline 124
+ 03DB                   .dbline 124
+ 03DB 62D000            mov REG[0xd0],>_cnt
+ 03DE 7601              inc [_cnt+1]
+ 03E0 0E0000            adc [_cnt],0
+ 03E3                   .dbline 124
+ 03E3           L71:
+ 03E3                   .dbline 124
+ 03E3           ; 
+ 03E3           ;                               while(!USBFS_1_bGetEPAckState(3)&&(cnt<5000)){cnt++;}
+ 03E3 10                push X
+ 03E4 5003              mov A,3
+ 03E6 7C0000            xcall _USBFS_1_bGetEPAckState
+ 03E9 20                pop X
+ 03EA 3900              cmp A,0
+ 03EC B00E              jnz L73
+ 03EE 62D000            mov REG[0xd0],>_cnt
+ 03F1 5101              mov A,[_cnt+1]
+ 03F3 1188              sub A,-120
+ 03F5 5100              mov A,[_cnt]
+ 03F7 1913              sbb A,19
+ 03F9 CFE1              jc L70
+ 03FB           X3:
+ 03FB           L73:
+ 03FB                   .dbline 126
+ 03FB           ;                               //USBFS_1_LoadInEP(3, rxBuffer, 32, USB_TOGGLE);                // PCye gonder getsin.
+ 03FB           ;                                       USBFS_1_LoadInEP(3, cevapbuffer, 32, USB_TOGGLE);               // PCye gonder getsin.
+ 03FB 10                push X
+ 03FC 5001              mov A,1
+ 03FE 08                push A
+ 03FF 5000              mov A,0
+ 0401 08                push A
+ 0402 5020              mov A,32
+ 0404 08                push A
+ 0405 5000              mov A,>_cevapbuffer
+ 0407 08                push A
+ 0408 5000              mov A,<_cevapbuffer
+ 040A 08                push A
+ 040B 5003              mov A,3
+ 040D 08                push A
+ 040E 7C0000            xcall _USBFS_1_LoadInEP
+ 0411 38FA              add SP,-6
+ 0413 20                pop X
+ 0414                   .dbline 127
+ 0414           ;                               cnt=0;
+ 0414 62D000            mov REG[0xd0],>_cnt
+ 0417 550100            mov [_cnt+1],0
+ 041A 550000            mov [_cnt],0
+ 041D                   .dbline 129
+ 041D           ;               
+ 041D           ; }//SOF_Flag kapa
+ 041D           L19:
+ 041D                   .dbline 130
+ 041D           L15:
+ 041D                   .dbline 73
+ 041D 8D5A              xjmp L14
+ 041F           X0:
+ 041F                   .dbline -2
+ 041F                   .dbline 131
+ 041F           ; }//while kapa
+ 041F           ; }//main kapa
+ 041F           L10:
+ 041F 38FF              add SP,-1
+ 0421 20                pop X
+ 0422                   .dbline 0 ; func end
+ 0422 8FFF              jmp .
+ 0424                   .dbsym l x 0 c
+ 0424                   .dbend
+ 0424                   .dbfunc e dly _dly fV
+ 0424           ;             mS -> X-7
+ 0424           _dly::
+ 0424                   .dbline -1
+ 0424 10                push X
+ 0425 4F                mov X,SP
+ 0426                   .dbline 133
+ 0426                   .dbline 133
+ 0426 62D000            mov REG[0xd0],>__r0
+ 0429 5000              mov A,0
+ 042B 08                push A
+ 042C 08                push A
+ 042D 08                push A
+ 042E 5002              mov A,2
+ 0430 08                push A
+ 0431 52F9              mov A,[X-7]
+ 0433 08                push A
+ 0434 52FA              mov A,[X-6]
+ 0436 08                push A
+ 0437 52FB              mov A,[X-5]
+ 0439 08                push A
+ 043A 52FC              mov A,[X-4]
+ 043C 08                push A
+ 043D 7C0000            xcall __divmod_32X32_32
+ 0440 18                pop A
+ 0441 5300              mov [__r3],A
+ 0443 18                pop A
+ 0444 5300              mov [__r2],A
+ 0446 18                pop A
+ 0447 5300              mov [__r1],A
+ 0449 18                pop A
+ 044A 38FC              add SP,-4
+ 044C 08                push A
+ 044D 5100              mov A,[__r1]
+ 044F 08                push A
+ 0450 5100              mov A,[__r2]
+ 0452 08                push A
+ 0453 5100              mov A,[__r3]
+ 0455 08                push A
+ 0456 52F9              mov A,[X-7]
+ 0458 08                push A
+ 0459 52FA              mov A,[X-6]
+ 045B 08                push A
+ 045C 52FB              mov A,[X-5]
+ 045E 08                push A
+ 045F 52FC              mov A,[X-4]
+ 0461 08                push A
+ 0462 9C93              xcall _init_delay_counter
+ 0464 38F8              add SP,-8
+ 0466           L75:
+ 0466                   .dbline 133
+ 0466           L76:
+ 0466                   .dbline 133
+ 0466           ; 
+ 0466           ; void dly(long int mS){init_delay_counter(mS,mS/2); while (DELAY_INVOKE);{}}
+ 0466 62D000            mov REG[0xd0],>_STATUS
+ 0469 5101              mov A,[_STATUS+1]
+ 046B 2101              and A,1
+ 046D 62D000            mov REG[0xd0],>__r0
+ 0470 5300              mov [__r1],A
+ 0472 62D000            mov REG[0xd0],>_STATUS
+ 0475 5100              mov A,[_STATUS]
+ 0477 2100              and A,0
+ 0479 62D000            mov REG[0xd0],>__r0
+ 047C 3900              cmp A,0
+ 047E BFE7              jnz L75
+ 0480 3C0000            cmp [__r1],0
+ 0483 BFE2              jnz L75
+ 0485           X4:
+ 0485                   .dbline 133
+ 0485                   .dbline 133
+ 0485                   .dbline -2
+ 0485                   .dbline 133
+ 0485           L74:
+ 0485 20                pop X
+ 0486                   .dbline 0 ; func end
+ 0486 7F                ret
+ 0487                   .dbsym l mS -7 L
+ 0487                   .dbend
+ 0487                   .dbfunc e TX _TX fV
+ 0487           ;           slad -> X-4
+ 0487           _TX::
+ 0487                   .dbline -1
+ 0487 10                push X
+ 0488 4F                mov X,SP
+ 0489                   .dbline 135
+ 0489                   .dbline 136
+ 0489 10                push X
+ 048A 5000              mov A,0
+ 048C 08                push A
+ 048D 5020              mov A,32
+ 048F 08                push A
+ 0490 5000              mov A,>_txBuffer
+ 0492 08                push A
+ 0493 5000              mov A,<_txBuffer
+ 0495 08                push A
+ 0496 52FC              mov A,[X-4]
+ 0498 08                push A
+ 0499 7C0000            xcall _I2CHW_1_bWriteBytes
+ 049C 38FB              add SP,-5
+ 049E                   .dbline 137
+ 049E 7C0000            xcall _I2CHW_1_bReadI2CStatus
+ 04A1 62D000            mov REG[0xd0],>__r0
+ 04A4 20                pop X
+ 04A5 3940              cmp A,64
+ 04A7 B006              jnz L79
+ 04A9                   .dbline 137
+ 04A9                   .dbline 137
+ 04A9 10                push X
+ 04AA 7C0000            xcall _I2CHW_1_ClrWrStatus
+ 04AD 20                pop X
+ 04AE                   .dbline 137
+ 04AE           L79:
+ 04AE                   .dbline -2
+ 04AE                   .dbline 138
+ 04AE           ; void TX(unsigned char slad)  
+ 04AE           ; {
+ 04AE           ;         I2CHW_1_bWriteBytes(slad, txBuffer, 32, I2CHW_1_CompleteXfer);
+ 04AE           ;         if (I2CHW_1_bReadI2CStatus() == I2CHW_WR_COMPLETE) {I2CHW_1_ClrWrStatus();}
+ 04AE           ; }
+ 04AE           L78:
+ 04AE 20                pop X
+ 04AF                   .dbline 0 ; func end
+ 04AF 7F                ret
+ 04B0                   .dbsym l slad -4 c
+ 04B0                   .dbend
+ 04B0                   .dbfunc e RX _RX fV
+ 04B0           ;          slad2 -> X-4
+ 04B0           _RX::
+ 04B0                   .dbline -1
+ 04B0 10                push X
+ 04B1 4F                mov X,SP
+ 04B2 3802              add SP,2
+ 04B4                   .dbline 141
+ 04B4           ;         
+ 04B4           ; void RX(unsigned char slad2)
+ 04B4           ; {             cnt=0;
+ 04B4                   .dbline 141
+ 04B4 62D000            mov REG[0xd0],>_cnt
+ 04B7 550100            mov [_cnt+1],0
+ 04BA 550000            mov [_cnt],0
+ 04BD                   .dbline 142
+ 04BD           ;               I2CHW_1_fReadBytes(slad2, rxBuffer, 32, I2CHW_1_CompleteXfer);
+ 04BD 10                push X
+ 04BE 5000              mov A,0
+ 04C0 08                push A
+ 04C1 5020              mov A,32
+ 04C3 08                push A
+ 04C4 5000              mov A,>_rxBuffer
+ 04C6 08                push A
+ 04C7 5000              mov A,<_rxBuffer
+ 04C9 08                push A
+ 04CA 52FC              mov A,[X-4]
+ 04CC 08                push A
+ 04CD 7C0000            xcall _I2CHW_1_fReadBytes
+ 04D0 38FB              add SP,-5
+ 04D2 20                pop X
+ 04D3           L82:
+ 04D3                   .dbline 143
+ 04D3           L83:
+ 04D3                   .dbline 143
+ 04D3           ;               while((!I2CHW_1_bReadI2CStatus() & I2CHW_RD_COMPLETE)&&(cnt<1000));  
+ 04D3 10                push X
+ 04D4 7C0000            xcall _I2CHW_1_bReadI2CStatus
+ 04D7 62D000            mov REG[0xd0],>__r0
+ 04DA 20                pop X
+ 04DB 3900              cmp A,0
+ 04DD B009              jnz L87
+ 04DF 560101            mov [X+1],1
+ 04E2 560000            mov [X+0],0
+ 04E5 8007              xjmp L88
+ 04E7           L87:
+ 04E7 560100            mov [X+1],0
+ 04EA 560000            mov [X+0],0
+ 04ED           L88:
+ 04ED 62D000            mov REG[0xd0],>__r0
+ 04F0 5201              mov A,[X+1]
+ 04F2 2104              and A,4
+ 04F4 5300              mov [__r1],A
+ 04F6 5200              mov A,[X+0]
+ 04F8 2100              and A,0
+ 04FA 3900              cmp A,0
+ 04FC B006              jnz X5
+ 04FE 3C0000            cmp [__r1],0
+ 0501 A00E              jz L86
+ 0503           X5:
+ 0503 62D000            mov REG[0xd0],>_cnt
+ 0506 5101              mov A,[_cnt+1]
+ 0508 11E8              sub A,-24
+ 050A 5100              mov A,[_cnt]
+ 050C 1903              sbb A,3
+ 050E CFC4              jc L82
+ 0510           X6:
+ 0510           L86:
+ 0510                   .dbline 144
+ 0510           ;         I2CHW_1_ClrRdStatus();cnt++;
+ 0510 10                push X
+ 0511 7C0000            xcall _I2CHW_1_ClrRdStatus
+ 0514 20                pop X
+ 0515                   .dbline 144
+ 0515 62D000            mov REG[0xd0],>_cnt
+ 0518 7601              inc [_cnt+1]
+ 051A 0E0000            adc [_cnt],0
+ 051D                   .dbline -2
+ 051D                   .dbline 145
+ 051D           ; }  
+ 051D           L81:
+ 051D 38FE              add SP,-2
+ 051F 20                pop X
+ 0520                   .dbline 0 ; func end
+ 0520 7F                ret
+ 0521                   .dbsym l slad2 -4 c
+ 0521                   .dbend
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _Count::
+ 0000 00                .byte 0
+ 0001                   .dbsym e Count _Count c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _OutReport::
+ 0000 00                .byte 0
+ 0001                   .dbsym e OutReport _OutReport c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _Timeout_d::
+ 0000 0000              .byte 0,0
+ 0002                   .dbsym e Timeout_d _Timeout_d i
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _acnt::
+ 0000 0000              .byte 0,0
+ 0002                   .dbsym e acnt _acnt i
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _cnt::
+ 0000 0000              .byte 0,0
+ 0002                   .dbsym e cnt _cnt i
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _ptr::
+ 0000 0000              .byte 0,0
+ 0002                   .dbsym e ptr _ptr pc
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _status::
+ 0000 00                .byte 0
+ 0001                   .dbsym e status _status c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _cevapbuffer::
+ 0000 00000000000000000000      .word 0,0,0,0,0
+ 000A 00000000000000000000      .word 0,0,0,0,0
+ 0014 00000000000000000000      .word 0,0,0,0,0
+ 001E 0000              .byte 0,0
+ 0020                   .dbsym e cevapbuffer _cevapbuffer A[32:32]c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _rxBuffer::
+ 0000 00000000000000000000      .word 0,0,0,0,0
+ 000A 00000000000000000000      .word 0,0,0,0,0
+ 0014 00000000000000000000      .word 0,0,0,0,0
+ 001E 0000              .byte 0,0
+ 0020                   .dbsym e rxBuffer _rxBuffer A[32:32]c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000           _txBuffer::
+ 0000 00000000000000000000      .word 0,0,0,0,0
+ 000A 00000000000000000000      .word 0,0,0,0,0
+ 0014 00000000000000000000      .word 0,0,0,0,0
+ 001E 0000              .byte 0,0
+ 0020                   .dbsym e txBuffer _txBuffer A[32:32]c

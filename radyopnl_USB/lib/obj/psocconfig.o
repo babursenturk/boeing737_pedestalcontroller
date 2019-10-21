@@ -1,0 +1,37 @@
+XH
+H 3 areas 9 global symbols
+M psocconfig.asm
+S LoadConfigTBL_usb Ref0000
+A text size 0 flags 0
+dbfile lib/psocconfig.asm
+dbfunc 0 ? 0 I
+dbfile ./lib/GlobalParams.inc
+dbfunc 0 ? 0 I
+dbfile lib/psocconfig.asm
+dbfunc 0 ? 0 I
+dbfile memory.inc
+dbfunc 0 ? 0 I
+dbfile lib/psocconfig.asm
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~1/CYPRES~1/PSOCDE~1/tools/include/CY8C24~2/m8c.inc
+dbfunc 0 ? 0 I
+A psoc_config size D flags 0
+dbfile lib/psocconfig.asm
+dbfunc 0 ? 0 I
+dbline 3E 0
+dbline 40 3
+dbline 44 6
+dbline 5C 7
+dbline 5F A
+dbline 61 C
+S LoadConfigInit Def0000
+S LoadConfig_usb Def0007
+S _LoadConfigInit Def0000
+S _LoadConfig_usb Def0007
+A InterruptRAM size 1 flags 20
+S _NO_SHADOW Def0000
+S _Port_1_Data_SHADE Def0000
+S NO_SHADOW Def0000
+S Port_1_Data_SHADE Def0000
+T 00 00 55 00 00 00 7C 00 07 7F 7C 00 00 70 EF 7F
+R 00 00 00 01 09 03 00 02 00 07 00 01 02 0B 00 00

@@ -1,0 +1,73 @@
+XH
+H 2 areas 1E global symbols
+M i2chw_1rsrcinits.asm
+A text size 0 flags 0
+dbfile lib/i2chw_1rsrcinits.asm
+dbfunc 0 ? 0 I
+dbfile ./lib/I2CHW_1Common.inc
+dbfunc 0 ? 0 I
+dbfile lib/i2chw_1rsrcinits.asm
+dbfunc 0 ? 0 I
+dbfile memory.inc
+dbfunc 0 ? 0 I
+dbfile lib/i2chw_1rsrcinits.asm
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~1/CYPRES~1/PSOCDE~1/tools/include/CY8C24~2/m8c.inc
+dbfunc 0 ? 0 I
+A UserModules size 21 flags 0
+dbfile lib/i2chw_1rsrcinits.asm
+dbfunc 0 ? 0 I
+dbline 58 0
+dbline 74 1
+dbline 75 2
+dbline 76 4
+dbline 77 6
+dbline 78 8
+dbline 79 B
+dbline 7B C
+dbline 97 D
+dbline 99 10
+dbline B5 11
+dbline B7 14
+dbline D5 15
+dbline D7 18
+dbline F2 19
+dbline F4 1C
+dbline 10F 1D
+dbline 111 20
+S _I2CHW_1_DisableMstr Def001D
+S $sb$I2CHW_1_DisableSlave Def0019
+S $se$I2CHW_1_DisableSlave Def001D
+S _I2CHW_1_EnableInt Def0001
+S I2CHW_1_DisableInt Def0015
+S I2CHW_1_EnableMstr Def000D
+S $sb$I2CHW_1_DisableInt Def0015
+S $se$I2CHW_1_DisableInt Def0019
+S _I2CHW_1_Stop Def0015
+S $sb$I2CHW_1_EnableMstr Def000D
+S $se$I2CHW_1_EnableMstr Def0011
+S _I2CHW_1_DisableSlave Def0019
+S I2CHW_1_Start Def0000
+S $sb$I2CHW_1_Start Def0000
+S $se$I2CHW_1_Start Def0001
+S _I2CHW_1_DisableInt Def0015
+S I2CHW_1_EnableSlave Def0011
+S _I2CHW_1_EnableMstr Def000D
+S I2CHW_1_DisableMstr Def001D
+S $sb$I2CHW_1_EnableSlave Def0011
+S $se$I2CHW_1_EnableSlave Def0015
+S _I2CHW_1_Start Def0000
+S I2CHW_1_EnableInt Def0001
+S $sb$I2CHW_1_DisableMstr Def001D
+S $se$I2CHW_1_DisableMstr Def0021
+S $sb$I2CHW_1_EnableInt Def0001
+S $se$I2CHW_1_EnableInt Def000D
+S _I2CHW_1_EnableSlave Def0011
+S I2CHW_1_Stop Def0015
+S I2CHW_1_DisableSlave Def0019
+T 00 00 7F 08 5D DD 21 FE 60 DD 43 DE 01 18 7F 43
+R 00 00 00 01
+T 00 0E D6 02 7F 43 D6 01 7F 41 DE FE 7F 41 D6 FE
+R 00 00 00 01
+T 00 1C 7F 41 D6 FD 7F
+R 00 00 00 01

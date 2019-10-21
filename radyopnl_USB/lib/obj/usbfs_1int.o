@@ -1,0 +1,101 @@
+XH
+H 2 areas 13 global symbols
+M usbfs_1int.asm
+S USBFS_1_bCurrentDevice Ref0000
+S USBFS_1_EndpointAPIStatus Ref0000
+S _USBFS_1_Start Ref0000
+S USBFS_1_EPDataToggle Ref0000
+A text size 58 flags 0
+dbfile lib/usbfs_1int.asm
+dbfunc 0 ? 0 I
+dbline 72 0
+dbline 73 1
+dbline 74 4
+dbline 75 6
+dbline 76 8
+dbline 77 A
+dbline 78 D
+dbline 79 10
+dbline 7A 12
+dbline 7B 13
+dbline 98 14
+dbline 99 15
+dbline 9A 18
+dbline 9B 1A
+dbline 9C 1C
+dbline 9D 1E
+dbline 9E 21
+dbline 9F 22
+dbline BB 23
+dbline BC 24
+dbline BD 27
+dbline BE 29
+dbline BF 2B
+dbline C0 2D
+dbline C1 30
+dbline C2 31
+dbline DE 32
+dbline DF 33
+dbline E0 36
+dbline E1 38
+dbline E2 3A
+dbline E3 3C
+dbline E4 3F
+dbline E5 40
+dbline 115 41
+dbline 116 42
+dbline 117 43
+dbline 118 45
+dbline 119 47
+dbline 11A 49
+dbline 11B 4B
+dbline 11C 4C
+dbline 11D 4E
+dbline 11E 51
+dbline 11F 52
+dbline 123 53
+dbline 131 54
+dbline 138 56
+dbline 149 57
+dbfile ./lib/USBFS_1.inc
+dbfunc 0 ? 0 I
+dbfile lib/usbfs_1int.asm
+dbfunc 0 ? 0 I
+dbfile memory.inc
+dbfunc 0 ? 0 I
+dbfile lib/usbfs_1int.asm
+dbfunc 0 ? 0 I
+dbfile C:/PROGRA~1/CYPRES~1/PSOCDE~1/tools/include/CY8C24~2/m8c.inc
+dbfunc 0 ? 0 I
+S _USBFS_1_SOF_ISR Def0054
+S USBFS_1_RESET_ISR Def0041
+S USBFS_1_EP1_ISR Def0000
+S USBFS_1_EP2_ISR Def0014
+S USBFS_1_EP3_ISR Def0023
+S USBFS_1_EP4_ISR Def0032
+S USBFS_1_WAKEUP_ISR Def0057
+S _USBFS_1_RESET_ISR Def0041
+S USBFS_1_SOF_ISR Def0054
+S _USBFS_1_EP1_ISR Def0000
+S _USBFS_1_EP2_ISR Def0014
+S _USBFS_1_EP3_ISR Def0023
+S _USBFS_1_EP4_ISR Def0032
+S _USBFS_1_WAKEUP_ISR Def0057
+A InterruptRAM size 1 flags 20
+S _SOF_Flag Def0000
+T 00 00 08 36 00 00 02 71 10 5D C4 70 EF 62 D3
+R 00 00 00 00 0B 04 00 03
+T 00 0C 00 00 55 00 01 01 71 40 18 7E 08 36 00 00
+R 00 00 00 00 4B 02 00 01 0B 05 00 01 0B 0E 00 03
+T 00 17 04 71 10 5D C5 70 EF 55 00 02 01 18 7E 08
+R 00 00 00 00 0B 0A 00 01
+T 00 24 36 00 00 08 71 10 5D C6 70 EF 55 00 03 01
+R 00 00 00 00 0B 03 00 03 0B 0D 00 01
+T 00 30 18 7E 08 36 00 00 10 71 10 5D C7 70 EF 55
+R 00 00 00 00 0B 06 00 03
+T 00 3D 00 04 01 18 7E 08 10 71 10 5D C1 70 EF 21
+R 00 00 00 00 0B 02 00 01
+T 00 4A 01 5C 51 00 00 7C 00 00 20 18 7E 76 00 00
+R 00 00 00 00 0B 05 00 00 02 08 00 02 09 0E 00 01
+T 00 56 7E 7E
+R 00 00 00 00

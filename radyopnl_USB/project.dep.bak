@@ -1,0 +1,9 @@
+# DO NOT DELETE
+./obj/boot.o :  C:/PROGRA~1/CYPRES~1/PSOCDE~1/tools/include/CY8C24~2/m8c.inc\
+   C:/PROGRA~1/CYPRES~1/PSOCDE~1/tools/include/CY8C24~2/m8ssc.inc\
+   D:\BAHABR~1\PSOCDes\RADYO_~1\RADYOP~1\lib\GLOBAL~1.INC\
+   D:\BAHABR~1\PSOCDes\RADYO_~1\RADYOP~1\memory.inc
+./obj/main.o :  ./lib/COUNTE~1.H ./lib/I2CHW_~1.H ./lib/I2CHW_~2.H\
+   ./lib/PSoCAPI.h ./lib/USBFS_1.h\
+   C:/PROGRA~1/CYPRES~1/PSOCDE~1/tools/include/CY8C24~2/m8c.h\
+   D:\BAHABR~1\PSOCDes\RADYO_~1\RADYOP~1\hbheader.h
